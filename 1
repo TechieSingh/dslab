@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct
+{
+    int id;
+    char name[25];
+    char dept[25];
+    int sal;
+    int age;
+}employee;
+
+void add()
+{
+  FILE *fp;
+  employee emp;
+  printf("enter the details/n");
+  scanf("%d%s%s%d%d",&emp.id,emp.name,emp.dept,&emp.sal,&emp.age);
+  fp=fopen("employee.txt","a");
+  fprintf(fp,"%d\t%s\t%s\t%d\t%d\n",emp.id,emp.name,emp.dept,emp.sal,emp.age);
+  fclose(fp);
+}
+void display()
+{
+    int count=0;
+    FILE *fp;
+    employee emp;
+    fp=fopen("employee.txt","r");
+    printf("details\n");
+    while(fscanf(fp,"%d%s%s%d%d",&emp.id,emp.name,emp.dept,&emp.sal,&emp.age)!=EOF);
+    {
+        printf("%d\t%s\t%s\t%d\t%d\n",emp.id,emp.name,emp.dept,emp.sal,emp.age);
+        count++;
+    }
+    fclose(fp);
+}
+
+void search()
+{
+    int count=0;
+    char dep[10];
+    FILE *fp;
+    employee emp;
+    printf("enter th dept\n");
+    scanf("%s",&dep);
+    fp=fopen("employee.txt","r");
+    while(fscanf(fp,"%d%s%s%d%d",&emp.id,emp.name,emp.dept,&emp.sal,&emp.age)!=EOF)
+    {
+        if(strcmp(emp.dept,dep)==0)
+        {
+            printf("%d\t%s\t%s\t%d\t%d\n",emp.id,emp.name,emp.dept,emp.sal,emp.age);
+            count++;
+        }
+    }
+    if(dep==0)
+        printf("no record");
+        fclose(fp);
+}
+
+int main()
+{
+ int ch;
+ char dept[10];
+ while(1)
+ {
+ printf("enter your choice 1.add 2.display 3.search 4. exit\n");
+ scanf("%d",&ch);
+
+ switch(ch)
+    {
+     case 1: add();
+             break;
+     case 2: display();
+             break;
+     case 3: search();
+             break;
+    case 4: exit(0);
+
+    }
+ }
+ return 0;
+}
